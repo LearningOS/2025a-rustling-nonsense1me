@@ -3,11 +3,10 @@
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
 // I AM NOT DONE
-
+//
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
 use std::vec::*;
-
 #[derive(Debug)]
 struct Node<T> {
     val: T,
@@ -71,13 +70,43 @@ impl<T> LinkedList<T> {
     }
 	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
 	{
-		//TODO
-		Self {
+        Self {
             length: 0,
             start: None,
             end: None,
+        };
+		let mut merged = LinkedList::new();
+        let mut tail =&mut merged.start();
+        let mut length = 0;
+        while list_a.start.is_some() && list_b.start.is_some() {
+            let l1_val = list_a.start.as_ref.unwrap().val;
+            let l2_val = list_b.start.as_ref.unwrap().val;
+            if l1_val <= l2_val{
+                let mut node = list_a.start.take().unwrap();
+                list_a.start = node.next.take();
+                *tail =Some(node);
+                tail =&mut tail.as_mut().unwrap().next;   
+            }
+            length += 1;
+
         }
+        let remaining = if list1.start.is_some(){
+            list_a.start
+        }else{
+            list_b.start
+        };
+        *tail = remaining;
+        let mut rest = tail;
+        while let Some(node) =rest{
+            length += 1;
+            rest = &mut node.next;
+        }
+        merged.length = length;
+        
+ 		
+        merged
 	}
+    
 }
 
 impl<T> Display for LinkedList<T>
