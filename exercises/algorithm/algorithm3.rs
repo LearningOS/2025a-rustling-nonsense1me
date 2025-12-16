@@ -6,7 +6,25 @@
 // I AM NOT DONE
 
 fn sort<T>(array: &mut [T]){
-	//TODO
+	let len = array.len();
+    //边界情况
+    if len <= 1 {
+        return;
+    }
+    for i in 0..len {
+        let mut swapped = false;
+        for j in 0..len - i - 1 {
+            //比较
+            if array[j] > array[j - 1] {
+                array.swap(j,j + 1);
+                swapped = true;
+            }
+        }
+        //
+        if !swapped {
+            break;
+        }
+    }
 }
 #[cfg(test)]
 mod tests {
