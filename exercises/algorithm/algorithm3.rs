@@ -3,9 +3,7 @@
 	This problem requires you to implement a sorting algorithm
 	you can use bubble sorting, insertion sorting, heap sorting, etc.
 */
-// I AM  DONE
-
-fn sort<T>(array: &mut [T]){
+fn sort<T:PartialOrd>(array: &mut [T]){
 	let len = array.len();
     //边界情况
     if len <= 1 {
@@ -15,7 +13,7 @@ fn sort<T>(array: &mut [T]){
         let mut swapped = false;
         for j in 0..len - i - 1 {
             //比较
-            if array[j] > array[j - 1] {
+            if array[j] > array[j + 1] {
                 array.swap(j,j + 1);
                 swapped = true;
             }
