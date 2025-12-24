@@ -6,10 +6,15 @@
 //
 // Execute `rustlings hint tests8` or use the `hint` watch subcommand for a
 // hint.
-
-// I AM NOT DONE
-
-fn main() {}
+use std::env;
+fn main() {
+    let creat_name = env::var("CARGO_PKG_NAME").unwrap();
+    match crate_name.as_str(){
+        "tests8" => {
+            println!("");
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {

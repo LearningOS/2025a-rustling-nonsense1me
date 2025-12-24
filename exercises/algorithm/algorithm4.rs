@@ -80,7 +80,6 @@ where
 {
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
-        //TODO
         if value < T.left{
            match &mut self.left{
             None =>{
