@@ -2,8 +2,6 @@
 	heap
 	This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
-
 use std::cmp::Ord;
 use std::default::Default;
 
@@ -18,7 +16,7 @@ where
 
 impl<T> Heap<T>
 where
-    T: Default,
+    T: Default+std::cmp::PartialOrd,
 {
     pub fn new(comparator: fn(&T, &T) -> bool) -> Self {
         Self {
@@ -38,6 +36,21 @@ where
 
     pub fn add(&mut self, value: T) {
         //TODO
+        // 将新元素添加到堆的末尾
+    self.items.push(value);
+    self.count += 1;
+    
+    // 上浮调整：从新元素位置开始，与其父节点比较并交换
+    let mut idx = self.count;
+    while idx > 1 {
+        let parent_idx = self.parent_idx(idx);
+        if self.items[idx - 1] < self.items[parent_idx - 1] {
+            self.items.swap(idx - 1, parent_idx - 1);
+            idx = parent_idx;
+        } else {
+            break;
+        }
+    }
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -58,7 +71,14 @@ where
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
         //TODO
-		0
+		let left = self.left_child_idx(idx);
+    let right = self.right_child_idx(idx);
+    
+    // 如果右子节点存在且小于左子节点，则返回右子节点索引
+    if right <= self.count && self.items[right - 1] < self.items[left - 1] {
+        right
+    } else {
+        left
     }
 }
 
@@ -151,4 +171,5 @@ mod tests {
         heap.add(1);
         assert_eq!(heap.next(), Some(2));
     }
+}
 }
