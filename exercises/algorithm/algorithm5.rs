@@ -2,8 +2,6 @@
 	bfs
 	This problem requires you to implement a basic BFS algorithm
 */
-
-//I AM NOT DONE
 use std::collections::VecDeque;
 
 // Define a graph
@@ -30,7 +28,32 @@ impl Graph {
         
 		//TODO
 
-        let mut visit_order = vec![];
+        use std::collections::{VecDeque, HashSet};
+    
+    let mut visit_order = vec![];
+    // 如果起始节点超出图的范围，直接返回空向量
+    if start >= self.adj.len() {
+        return visit_order;
+    }
+    
+    let mut visited = HashSet::new();
+    let mut queue = VecDeque::new();
+    
+    // 从起始节点开始BFS
+    visited.insert(start);
+    queue.push_back(start);
+    
+    while let Some(node) = queue.pop_front() {
+        visit_order.push(node);
+        
+        // 遍历当前节点的所有邻居
+        for &neighbor in &self.adj[node] {
+            if !visited.contains(&neighbor) {
+                visited.insert(neighbor);
+                queue.push_back(neighbor);
+            }
+        }
+    }
         visit_order
     }
 }

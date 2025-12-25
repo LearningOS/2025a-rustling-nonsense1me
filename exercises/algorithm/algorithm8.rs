@@ -2,8 +2,6 @@
 	queue
 	This question requires you to use queues to implement the functionality of the stac
 */
-// I AM NOT DONE
-
 #[derive(Debug)]
 pub struct Queue<T> {
     elements: Vec<T>,
@@ -68,14 +66,28 @@ impl<T> myStack<T> {
     }
     pub fn push(&mut self, elem: T) {
         //TODO
+        // 思路：始终确保新元素在队列的最前端
+        // 1. 将新元素压入空的辅助队列 q2
+        self.q2.push(elem);
+        // 2. 将主队列 q1 中的所有元素依次弹出，并压入 q2
+        while let Ok(val) = self.q1.pop() {
+            self.q2.push(val);
+        }
+        // 3. 交换 q1 和 q2 的角色，使得 q1 始终是“主队列”
+        std::mem::swap(&mut self.q1, &mut self.q2);
     }
     pub fn pop(&mut self) -> Result<T, &str> {
         //TODO
-		Err("Stack is empty")
+         // 直接从主队列 q1 的头部弹出元素，即为最后进入的元素
+        self.q1.elements.pop().map_err(|_| "Stack is empty")
+		// Err("Stack is empty")
     }
     pub fn is_empty(&self) -> bool {
 		//TODO
-        true
+         // 栈为空当且仅当两个队列都为空
+        self.q1.is_empty() && self.q2.is_empty()
+    
+        
     }
 }
 
